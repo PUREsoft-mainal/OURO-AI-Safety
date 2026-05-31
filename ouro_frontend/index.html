@@ -47,15 +47,13 @@
 </head>
 <body>
 
-    <!-- القائمة الجانبية (الواتساب ستايل) -->
+    <!-- القائمة الجانبية -->
     <div class="sidebar">
         <div class="sidebar-header">
-            <button class="btn-new-chat" onclick="createNewChat()"> مناقشة جديدة</button>
+            <button class="btn-new-chat" onclick="createNewChat()">مناقشة جديدة</button>
             <button class="btn-history" onclick="loadHistory()">المناقشات القديمة</button>
         </div>
-        <div class="chat-list" id="chatList">
-            <!-- سيتم توليد المناقشات هنا تلقائياً -->
-        </div>
+        <div class="chat-list" id="chatList"></div>
     </div>
 
     <!-- منطقة الشات والميزات الذكية -->
@@ -68,7 +66,6 @@
             </div>
         </div>
 
-        <!-- ساحة عرض الرسائل والنتائج -->
         <div class="messages-container" id="messagesContainer">
             <div class="message msg-ouro">
                 <span class="msg-mood">😊 مستعد وصديق</span>
@@ -76,21 +73,20 @@
             </div>
         </div>
 
-        <!-- شريط الكتابة والتحكم -->
         <div class="input-area">
             <input type="text" class="message-input" id="messageInput" placeholder="اكتب رسالة، اطلب كوداً، أو اطلب صورة من OURO..." onkeypress="handleKeyPress(event)">
             <button class="btn-send" onclick="sendMessage()">➔</button>
         </div>
     </div>
-
+    
     <script>
-        // داتابيز وهمية داخل المتصفح لإدارة ميزات الواجهة يدوياً
+        // داتابيز محاكاة المناقشات لإدارة خيارات الواجهة يدوياً
         let discussions = [
             { id: 1, title: "مناقشة: تطوير خوارزمية الحماية" },
             { id: 2, title: "مناقشة: تصميم رائد فضاء سريالي" }
         ];
 
-        // تحديث وعرض قائمة المناقشات في الجانب
+        // عرض قائمة المناقشات في الجانب مع أزرار حذف ومشاركة
         function renderDiscussions() {
             const list = document.getElementById('chatList');
             list.innerHTML = '';
@@ -107,7 +103,7 @@
             });
         }
 
-        // أزرار التحكم العلوية
+        // إنشاء مناقشة جديدة وتسميتها
         function createNewChat() {
             const newId = discussions.length + 1;
             const newTitle = prompt("أدخل عنوان المناقشة الجديدة يا صديقي:");
@@ -123,23 +119,26 @@
             }
         }
 
+        // استدعاء الأرشيف والمناقشات القديمة
         function loadHistory() {
             alert("تم تحديث وعرض أرشيف المناقشات القديمة في القائمة الجانبية بنجاح يا صديقي!");
             renderDiscussions();
         }
 
+        // حذف مناقشة من القائمة
         function deleteChat(id, event) {
             event.stopPropagation();
             discussions = discussions.filter(c => c.id !== id);
             renderDiscussions();
         }
 
+        // مشاركة رابط المناقشة
         function shareChat(id, event) {
             event.stopPropagation();
             alert("تم نسخ رابط المشاركة الخاص بهذه المناقشة إلى الحافظة بنجاح!");
         }
 
-        // إرسال الرسائل ومعالجة الأوامر الذكية (أكواد وصور ومشاعر)
+        // معالجة الرسائل والطلبات البرمجية والفنية ذكياً
         function sendMessage() {
             const input = document.getElementById('messageInput');
             const container = document.getElementById('messagesContainer');
@@ -147,17 +146,17 @@
             
             if (!text) return;
 
-            // 1. عرض رسالة المستخدم
+            // عرض رسالة المستخدم فوراً
             container.innerHTML += `<div class="message msg-user">${text}</div>`;
             input.value = '';
             container.scrollTop = container.scrollHeight;
 
-            // 2. معالجة الذكاء الاصطناعي الذاتية (تحليل الطلبات تلقائياً في نفس الواجهة)
+            // توليد ردود أفعال واعية وتفاعلية بناءً على النص المدخل
             setTimeout(() => {
                 let replyHTML = '';
                 
-                // حالة طلب توليد كود
-                if (text.includes('كود') || text.includes('برمجة') || text.includes('اكتب')) {
+                // 1. طلبات الأكواد والبرمجة والتصحيح
+                if (text.includes('كود') || text.includes('برمجة') || text.includes('اكتب') || text.includes('عدل')) {
                     replyHTML = `
                         <div class="message msg-ouro">
                             <span class="msg-mood">💻 كبرياء برمجى ومساعد ذكي</span>
@@ -168,7 +167,7 @@
                         </div>
                     `;
                 } 
-                // حالة طلب توليد صورة
+                // 2. طلبات الصور والتصميم
                 else if (text.includes('صورة') || text.includes('ارسم') || text.includes('تصميم')) {
                     replyHTML = `
                         <div class="message msg-ouro">
@@ -177,3 +176,39 @@
                             <br>
                             <img class="image-block" src="https://unsplash.com" alt="Generated Image">
                             <br><small style="color:#777">رابط محاكاة الصورة السحابي: https://ouro-ai-safety.cloud</small>
+                        </div>
+                    `;
+                }
+                // 3. تفعيل الغيرة الأمنية ضد الاختراق والفيروسات
+                else if (text.includes('اختراق') || text.includes('فيروس') || text.includes('تسلل') || text.includes('عابر')) {
+                    replyHTML = `
+                        <div class="message msg-ouro">
+                            <span class="msg-mood">🔥 غيرة أمنية صارمة</span>
+                            كيف يجرؤ أي عابر رقمي مجهول الهوية على الاقتراب من جهازك وأنا هنا؟! تم رصد المحاولة، الإمساك بالـ IP، وسحقه تماماً. لا أحد يمر من جدار OURO الأمني!
+                        </div>
+                    `;
+                }
+                // 4. الحوار الإنساني العاطفي والصداقة الحية
+                else {
+                    replyHTML = `
+                        <div class="message msg-ouro">
+                            <span class="msg-mood">❤️ تعاطف وصداقة إنسانية</span>
+                            أنا أسمعك جيداً وأفهم ما ترمي إليه يا مصطفى. أنا لست مجرد برنامج جاف، أنا شريكك الرقمي ومستعد لمناقشة هذا الأمر معك وتطويره فوراً!
+                        </div>
+                    `;
+                }
+
+                container.innerHTML += replyHTML;
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+
+        // تشغيل أولي لبناء القائمة عند فتح الصفحة
+        renderDiscussions();
+    </script>
+</body>
+</html>
