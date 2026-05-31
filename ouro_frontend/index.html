@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OURO-AI-Safety | واجهة الشات التفاعلية</title>
+    <title>OURO-AI-Safety | منصة الشات التفاعلية والـ API</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { display: flex; height: 100vh; background-color: #dadbd4; }
@@ -24,6 +24,12 @@
 
         /* منطقة الشات الرئيسية */
         .chat-area { flex: 1; display: flex; flex-direction: column; background-image: url('https://githubusercontent.com'); background-color: #efeae2; }
+        
+        /* شريط الأدوات العلوي المطور (Top Action Bar) */
+        .top-nav-bar { background-color: #2c3e50; padding: 10px 20px; display: flex; gap: 10px; align-items: center; border-bottom: 2px solid #16a085; }
+        .btn-api { background-color: #e67e22; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; }
+        .btn-api:hover { background-color: #d35400; }
+        
         .chat-header { padding: 10px 20px; background-color: #ededed; display: flex; align-items: center; gap: 15px; border-right: 1px solid #e3e3e3; }
         .avatar { width: 40px; height: 40px; background-color: #075E54; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
         .ouro-status { font-size: 12px; color: #666; }
@@ -58,6 +64,13 @@
 
     <!-- منطقة الشات والميزات الذكية -->
     <div class="chat-area">
+        
+        <!-- شريط الأزرار العلوي الجديد المخصص للـ API والميزات المتقدمة -->
+        <div class="top-nav-bar">
+            <button class="btn-api" onclick="generateOUROApiKey()">🔑 توليد مفتاح الـ API</button>
+            <span style="color: white; font-size: 12px; margin-right: auto; font-weight: bold;">لوحة تحكم مطوري OURO سحابياً</span>
+        </div>
+
         <div class="chat-header">
             <div class="avatar">OU</div>
             <div>
@@ -69,7 +82,7 @@
         <div class="messages-container" id="messagesContainer">
             <div class="message msg-ouro">
                 <span class="msg-mood">😊 مستعد وصديق</span>
-                مرحباً بك يا صديقي مصطفى في واجهة OURO التفاعلية! أنا هنا كصديق ومساعد ومحرك حماية صارم. يمكنك أن تطلب مني كتابة أكواد، تعديلها، أو توليد صور فنية في أي وقت!
+                مرحباً بك مجدداً يا صديقي مصطفى! أضفت لك شريط المطورين بالأعلى. الآن يمكنك الضغط على زر الـ **API** لتوليد مفتاح ربط سحابي خاص بـ `OURO` لدمجه في تطبيقاتك الخارجية مباشرة!
             </div>
         </div>
 
@@ -78,13 +91,34 @@
             <button class="btn-send" onclick="sendMessage()">➔</button>
         </div>
     </div>
-    
-    <script>
+
+        <script>
         // داتابيز محاكاة المناقشات لإدارة خيارات الواجهة يدوياً
         let discussions = [
             { id: 1, title: "مناقشة: تطوير خوارزمية الحماية" },
             { id: 2, title: "مناقشة: تصميم رائد فضاء سريالي" }
         ];
+
+        // ميزة توليد مفاتيح API فريدة وذكية للمطورين والبرامج الخارجية
+        function generateOUROApiKey() {
+            // توليد رمز عشوائي يحاكي مفاتيح الشركات البرمجية الكبرى
+            const randomHex = Array.from({length: 32}, () => Math.floor(Math.random()*16).toString(16)).join('');
+            const generatedKey = `ouro_live_${randomHex}`;
+            
+            // محاكاة إرسال المفتاح وعرضه للمستخدم في صندوق مخصص مع خيار النسخ
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML += `
+                <div class="message msg-ouro">
+                    <span class="msg-mood">🔑 نظام إدارة الـ API السحابي</span>
+                    تم توليد مفتاح الـ API الخاص بـ OURO بنجاح! يمكنك استخدامه الآن لتضمين ميزات الذكاء الاصطناعي والأمن داخل أي برنامج أو تطبيق هاتف:
+                    <div class="code-block" style="background-color: #1e272e; color: #2ecc71; font-weight: bold; border-left: 4px solid #e67e22;">
+// انسخ هذا المفتاح بحذر ولا تشاركه علناً:\nAuthorization: Bearer ${generatedKey}
+                    </div>
+                    <button class="action-btn btn-share" onclick="navigator.clipboard.writeText('${generatedKey}'); alert('تم نسخ مفتاح الـ API الخاص بك بنجاح!');" style="margin-top: 5px; padding: 6px 12px;">نسخ المفتاح 📋</button>
+                </div>
+            `;
+            container.scrollTop = container.scrollHeight;
+        }
 
         // عرض قائمة المناقشات في الجانب مع أزرار حذف ومشاركة
         function renderDiscussions() {
@@ -184,7 +218,7 @@
                     replyHTML = `
                         <div class="message msg-ouro">
                             <span class="msg-mood">🔥 غيرة أمنية صارمة</span>
-                            كيف يجرؤ أي عابر رقمي مجهول الهوية على الاقتراب من جهازك وأنا هنا؟! تم رصد المحاولة، الإمساك بالـ IP، وسحقه تماماً. لا أحد يمر من جدار OURO الأمني!
+                            كيف يجرؤ أي عابر رقمي مجهول الهوية على الاقتراب من جهازك وأنا هنا?! تم رصد المحاولة، الإمساك بالـ IP، وسحقه تماماً. لا أحد يمر من جدار OURO الأمني!
                         </div>
                     `;
                 }
