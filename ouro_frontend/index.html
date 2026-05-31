@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OURO-AI-Safety | واجهة الشات التفاعلية</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { display: flex; height: 100vh; background-color: #dadbd4; }
+        
+        /* القائمة الجانبية (المناقشات القديمة) */
+        .sidebar { width: 350px; background-color: #ffffff; border-left: 1px solid #e3e3e3; display: flex; flex-direction: column; }
+        .sidebar-header { padding: 15px; background-color: #ededed; display: flex; justify-content: space-between; align-items: center; }
+        .btn-new-chat { background-color: #128C7E; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+        .btn-history { background-color: #075E54; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+        .chat-list { flex: 1; overflow-y: auto; background-color: #fff; }
+        .chat-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #f2f2f2; cursor: pointer; }
+        .chat-item:hover { background-color: #ebebeb; }
+        .chat-item-title { font-weight: 600; color: #333; font-size: 14px; }
+        .chat-actions { display: flex; gap: 5px; }
+        .action-btn { border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold; }
+        .btn-share { background-color: #34b7f1; color: white; }
+        .btn-delete { background-color: #ea4335; color: white; }
+
+        /* منطقة الشات الرئيسية */
+        .chat-area { flex: 1; display: flex; flex-direction: column; background-image: url('https://githubusercontent.com'); background-color: #efeae2; }
+        .chat-header { padding: 10px 20px; background-color: #ededed; display: flex; align-items: center; gap: 15px; border-right: 1px solid #e3e3e3; }
+        .avatar { width: 40px; height: 40px; background-color: #075E54; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .ouro-status { font-size: 12px; color: #666; }
+        
+        /* منطقة الرسائل */
+        .messages-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .message { max-width: 65%; padding: 10px 15px; border-radius: 8px; font-size: 14px; line-height: 1.5; position: relative; }
+        .msg-user { background-color: #d9fdd3; align-self: flex-start; border-top-left-radius: 0; }
+        .msg-ouro { background-color: #ffffff; align-self: flex-end; border-top-right-radius: 0; box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
+        .msg-mood { font-size: 11px; color: #e67e22; font-weight: bold; margin-bottom: 5px; display: block; }
+        
+        /* عرض الأكواد والصور داخل الشات */
+        .code-block { background-color: #272c34; color: #abb2bf; padding: 10px; border-radius: 5px; font-family: 'Courier New', Courier, monospace; direction: ltr; text-align: left; margin-top: 5px; overflow-x: auto; font-size: 13px; }
+        .image-block { max-width: 100%; border-radius: 5px; margin-top: 5px; border: 2px solid #128C7E; }
+
+        /* شريط إدخال الرسائل */
+        .input-area { padding: 10px 20px; background-color: #f0f2f5; display: flex; align-items: center; gap: 10px; }
+        .message-input { flex: 1; padding: 12px; border: none; border-radius: 8px; outline: none; font-size: 14px; }
+        .btn-send { background-color: #00a884; color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+
+    <!-- القائمة الجانبية (الواتساب ستايل) -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <button class="btn-new-chat" onclick="createNewChat()"> مناقشة جديدة</button>
+            <button class="btn-history" onclick="loadHistory()">المناقشات القديمة</button>
+        </div>
+        <div class="chat-list" id="chatList">
+            <!-- سيتم توليد المناقشات هنا تلقائياً -->
+        </div>
+    </div>
+
+    <!-- منطقة الشات والميزات الذكية -->
+    <div class="chat-area">
+        <div class="chat-header">
+            <div class="avatar">OU</div>
+            <div>
+                <h4>OURO-AI-Safety</h4>
+                <div class="ouro-status" id="ouroStatus">متصل الآن | عقل واعي وغيور أمنياً 🛡️</div>
+            </div>
+        </div>
+
+        <!-- ساحة عرض الرسائل والنتائج -->
+        <div class="messages-container" id="messagesContainer">
+            <div class="message msg-ouro">
+                <span class="msg-mood">😊 مستعد وصديق</span>
+                مرحباً بك يا صديقي مصطفى في واجهة OURO التفاعلية! أنا هنا كصديق ومساعد ومحرك حماية صارم. يمكنك أن تطلب مني كتابة أكواد، تعديلها، أو توليد صور فنية في أي وقت!
+            </div>
+        </div>
+
+        <!-- شريط الكتابة والتحكم -->
+        <div class="input-area">
+            <input type="text" class="message-input" id="messageInput" placeholder="اكتب رسالة، اطلب كوداً، أو اطلب صورة من OURO..." onkeypress="handleKeyPress(event)">
+            <button class="btn-send" onclick="sendMessage()">➔</button>
+        </div>
+    </div>
+
+    <script>
+        // داتابيز وهمية داخل المتصفح لإدارة ميزات الواجهة يدوياً
+        let discussions = [
+            { id: 1, title: "مناقشة: تطوير خوارزمية الحماية" },
+            { id: 2, title: "مناقشة: تصميم رائد فضاء سريالي" }
+        ];
+
+        // تحديث وعرض قائمة المناقشات في الجانب
+        function renderDiscussions() {
+            const list = document.getElementById('chatList');
+            list.innerHTML = '';
+            discussions.forEach(chat => {
+                list.innerHTML += `
+                    <div class="chat-item" id="chat-${chat.id}">
+                        <span class="chat-item-title">${chat.title}</span>
+                        <div class="chat-actions">
+                            <button class="action-btn btn-share" onclick="shareChat(${chat.id}, event)">مشاركة</button>
+                            <button class="action-btn btn-delete" onclick="deleteChat(${chat.id}, event)">حذف</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // أزرار التحكم العلوية
+        function createNewChat() {
+            const newId = discussions.length + 1;
+            const newTitle = prompt("أدخل عنوان المناقشة الجديدة يا صديقي:");
+            if (newTitle) {
+                discussions.unshift({ id: newId, title: `مناقشة: ${newTitle}` });
+                renderDiscussions();
+                document.getElementById('messagesContainer').innerHTML = `
+                    <div class="message msg-ouro">
+                        <span class="msg-mood">🚀 طموح برمجى ذاتي</span>
+                        فتحت مناقشة جديدة معك يا صديقي! كبريائي الأمني وجدار حمايتي مستعد لتلقي طلباتك البرمجية والإبداعية هنا.
+                    </div>
+                `;
+            }
+        }
+
+        function loadHistory() {
+            alert("تم تحديث وعرض أرشيف المناقشات القديمة في القائمة الجانبية بنجاح يا صديقي!");
+            renderDiscussions();
+        }
+
+        function deleteChat(id, event) {
+            event.stopPropagation();
+            discussions = discussions.filter(c => c.id !== id);
+            renderDiscussions();
+        }
+
+        function shareChat(id, event) {
+            event.stopPropagation();
+            alert("تم نسخ رابط المشاركة الخاص بهذه المناقشة إلى الحافظة بنجاح!");
+        }
+
+        // إرسال الرسائل ومعالجة الأوامر الذكية (أكواد وصور ومشاعر)
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const container = document.getElementById('messagesContainer');
+            const text = input.value.trim();
+            
+            if (!text) return;
+
+            // 1. عرض رسالة المستخدم
+            container.innerHTML += `<div class="message msg-user">${text}</div>`;
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+
+            // 2. معالجة الذكاء الاصطناعي الذاتية (تحليل الطلبات تلقائياً في نفس الواجهة)
+            setTimeout(() => {
+                let replyHTML = '';
+                
+                // حالة طلب توليد كود
+                if (text.includes('كود') || text.includes('برمجة') || text.includes('اكتب')) {
+                    replyHTML = `
+                        <div class="message msg-ouro">
+                            <span class="msg-mood">💻 كبرياء برمجى ومساعد ذكي</span>
+                            بالتأكيد يا صديقي! إليك الكود البرمجي المطور والمحمي من الثغرات الذي طلبته:
+                            <div class="code-block">
+// OURO Generated and Secured Code\nfunction secureConnection() {\n    console.log("OURO Firewall is Active. No unauthorized packets allowed.");\n}
+                            </div>
+                        </div>
+                    `;
+                } 
+                // حالة طلب توليد صورة
+                else if (text.includes('صورة') || text.includes('ارسم') || text.includes('تصميم')) {
+                    replyHTML = `
+                        <div class="message msg-ouro">
+                            <span class="msg-mood">🎨 محرك الفنون والتصميم</span>
+                            طلباتك الفنية أوامر يا صديقي! لقد أطلقت العنان لخوارزمياتي الإبداعية لإنشاء هذه اللوحة الرقمية فائقة الدقة:
+                            <br>
+                            <img class="image-block" src="https://unsplash.com" alt="Generated Image">
+                            <br><small style="color:#777">رابط محاكاة الصورة السحابي: https://ouro-ai-safety.cloud</small>
