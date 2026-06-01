@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "ouro_backend/app.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "ouro_frontend/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "ouro_backend/app.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "ouro_frontend/index.html"
+    }
+  ]
+}
