@@ -96,6 +96,12 @@
     </div>
 
         <script>
+            // نقوم بتغيير الروابط لتشير إلى السيرفر السحابي الحقيقي لـ OURO بدلاً من السيرفر المحلي
+const BASE_CLOUD_URL = "https://render.com"; // استبدل هذا برابط السيرفر الخاص بك لاحقاً
+
+const CHAT_URL = `${BASE_CLOUD_URL}/api/v1/chat`;
+const IMAGE_URL = `${BASE_CLOUD_URL}/api/v1/generate-image`;
+
         let discussions = [
             { id: 1, title: "مناقشة: تطوير خوارزمية الحماية" },
             { id: 2, title: "مناقشة: تصميم رائد فضاء سريالي" }
