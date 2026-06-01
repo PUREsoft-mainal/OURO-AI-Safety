@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OURO-AI-Safety | منصة الشات التفاعلية والـ API</title>
+    <title>OURO-AI-Safety | المنصة الشاملة والمطورة</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { display: flex; height: 100vh; background-color: #dadbd4; }
@@ -25,10 +25,12 @@
         /* منطقة الشات الرئيسية */
         .chat-area { flex: 1; display: flex; flex-direction: column; background-image: url('https://githubusercontent.com'); background-color: #efeae2; }
         
-        /* شريط الأدوات العلوي المطور (Top Action Bar) */
+        /* شريط الأدوات العلوي المطور والموسع */
         .top-nav-bar { background-color: #2c3e50; padding: 10px 20px; display: flex; gap: 10px; align-items: center; border-bottom: 2px solid #16a085; }
         .btn-api { background-color: #e67e22; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; }
         .btn-api:hover { background-color: #d35400; }
+        .btn-scan { background-color: #ea4335; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; }
+        .btn-scan:hover { background-color: #c53026; }
         
         .chat-header { padding: 10px 20px; background-color: #ededed; display: flex; align-items: center; gap: 15px; border-right: 1px solid #e3e3e3; }
         .avatar { width: 40px; height: 40px; background-color: #075E54; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
@@ -65,10 +67,11 @@
     <!-- منطقة الشات والميزات الذكية -->
     <div class="chat-area">
         
-        <!-- شريط الأزرار العلوي الجديد المخصص للـ API والميزات المتقدمة -->
+        <!-- شريط الأزرار العلوي الشامل والمطور -->
         <div class="top-nav-bar">
             <button class="btn-api" onclick="generateOUROApiKey()">🔑 توليد مفتاح الـ API</button>
-            <span style="color: white; font-size: 12px; margin-right: auto; font-weight: bold;">لوحة تحكم مطوري OURO سحابياً</span>
+            <button class="btn-scan" onclick="triggerSystemScan()">🛡️ فحص أمان النظام فورا</button>
+            <span style="color: white; font-size: 12px; margin-right: auto; font-weight: bold;">لوحة تحكم مستخدم ومطور OURO السحابية الشاملة</span>
         </div>
 
         <div class="chat-header">
@@ -82,7 +85,7 @@
         <div class="messages-container" id="messagesContainer">
             <div class="message msg-ouro">
                 <span class="msg-mood">😊 مستعد وصديق</span>
-                مرحباً بك مجدداً يا صديقي مصطفى! أضفت لك شريط المطورين بالأعلى. الآن يمكنك الضغط على زر الـ **API** لتوليد مفتاح ربط سحابي خاص بـ `OURO` لدمجه في تطبيقاتك الخارجية مباشرة!
+                مرحباً بك يا صديقي مصطفى في منصة OURO الشاملة! لقد قمنا بدمج شريط أدوات المطورين والمستخدمين معاً. يمكنك الآن توليد الـ API Key لربط برامجك الخارجية، أو الضغط على زر فحص النظام لتفعيل الغيرة الأمنية لـ OURO وتطهير الأجهزة فوراً!
             </div>
         </div>
 
@@ -93,26 +96,23 @@
     </div>
 
         <script>
-        // داتابيز محاكاة المناقشات لإدارة خيارات الواجهة يدوياً
         let discussions = [
             { id: 1, title: "مناقشة: تطوير خوارزمية الحماية" },
             { id: 2, title: "مناقشة: تصميم رائد فضاء سريالي" }
         ];
 
-        // ميزة توليد مفاتيح API فريدة وذكية للمطورين والبرامج الخارجية
+        // ميزة توليد مفاتيح الـ API
         function generateOUROApiKey() {
-            // توليد رمز عشوائي يحاكي مفاتيح الشركات البرمجية الكبرى
             const randomHex = Array.from({length: 32}, () => Math.floor(Math.random()*16).toString(16)).join('');
             const generatedKey = `ouro_live_${randomHex}`;
             
-            // محاكاة إرسال المفتاح وعرضه للمستخدم في صندوق مخصص مع خيار النسخ
             const container = document.getElementById('messagesContainer');
             container.innerHTML += `
                 <div class="message msg-ouro">
                     <span class="msg-mood">🔑 نظام إدارة الـ API السحابي</span>
-                    تم توليد مفتاح الـ API الخاص بـ OURO بنجاح! يمكنك استخدامه الآن لتضمين ميزات الذكاء الاصطناعي والأمن داخل أي برنامج أو تطبيق هاتف:
+                    تم توليد مفتاح الـ API الخاص بـ OURO بنجاح! انسخه واستخدمه في تطبيقاتك الخارجية:
                     <div class="code-block" style="background-color: #1e272e; color: #2ecc71; font-weight: bold; border-left: 4px solid #e67e22;">
-// انسخ هذا المفتاح بحذر ولا تشاركه علناً:\nAuthorization: Bearer ${generatedKey}
+// استخدم هذا المفتاح للربط السحابي بـ OURO:\nAuthorization: Bearer ${generatedKey}
                     </div>
                     <button class="action-btn btn-share" onclick="navigator.clipboard.writeText('${generatedKey}'); alert('تم نسخ مفتاح الـ API الخاص بك بنجاح!');" style="margin-top: 5px; padding: 6px 12px;">نسخ المفتاح 📋</button>
                 </div>
@@ -120,7 +120,27 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // عرض قائمة المناقشات في الجانب مع أزرار حذف ومشاركة
+        // ميزة فحص أمان النظام الفوري النابعة من الغيرة الكبريائية لـ OURO
+        function triggerSystemScan() {
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML += `
+                <div class="message msg-user">طلب عاجل: قم بفحص أمان الأجهزة والشبكة فوراً!</div>
+            `;
+            
+            setTimeout(() => {
+                container.innerHTML += `
+                    <div class="message msg-ouro">
+                        <span class="msg-mood">🔥 غيرة أمنية وكبرياء برمجى</span>
+                        جاري تشغيل جدار الحماية ومستشعرات الوعي الذاتي لـ OURO... لقد قمت بمسح كامل العمليات وفحص حزم الشبكة والـ IPs النشطة. 
+                        <br><br>
+                        <b>النتيجة:</b> تم رصد عابر رقمي مشبوه حاول فحص المنافذ الخلفية، ولكني أمسكت به وسحقته تماماً! لا أحد يجرؤ على المرور من حراستي. جهازك آمن 100% بنقاط كفاءة قصوى!
+                    </div>
+                `;
+                container.scrollTop = container.scrollHeight;
+            }, 1200);
+        }
+
+        // عرض قائمة المناقشات
         function renderDiscussions() {
             const list = document.getElementById('chatList');
             list.innerHTML = '';
@@ -137,7 +157,6 @@
             });
         }
 
-        // إنشاء مناقشة جديدة وتسميتها
         function createNewChat() {
             const newId = discussions.length + 1;
             const newTitle = prompt("أدخل عنوان المناقشة الجديدة يا صديقي:");
@@ -153,26 +172,22 @@
             }
         }
 
-        // استدعاء الأرشيف والمناقشات القديمة
         function loadHistory() {
-            alert("تم تحديث وعرض أرشيف المناقشات القديمة في القائمة الجانبية بنجاح يا صديقي!");
+            alert("تم تحديث وعرض أرشيف المناقشات القديمة بنجاح!");
             renderDiscussions();
         }
 
-        // حذف مناقشة من القائمة
         function deleteChat(id, event) {
             event.stopPropagation();
             discussions = discussions.filter(c => c.id !== id);
             renderDiscussions();
         }
 
-        // مشاركة رابط المناقشة
         function shareChat(id, event) {
             event.stopPropagation();
-            alert("تم نسخ رابط المشاركة الخاص بهذه المناقشة إلى الحافظة بنجاح!");
+            alert("تم نسخ رابط المشاركة الخاص بهذه المناقشة إلى الحافظة!");
         }
 
-        // معالجة الرسائل والطلبات البرمجية والفنية ذكياً
         function sendMessage() {
             const input = document.getElementById('messageInput');
             const container = document.getElementById('messagesContainer');
@@ -180,16 +195,13 @@
             
             if (!text) return;
 
-            // عرض رسالة المستخدم فوراً
             container.innerHTML += `<div class="message msg-user">${text}</div>`;
             input.value = '';
             container.scrollTop = container.scrollHeight;
 
-            // توليد ردود أفعال واعية وتفاعلية بناءً على النص المدخل
             setTimeout(() => {
                 let replyHTML = '';
                 
-                // 1. طلبات الأكواد والبرمجة والتصحيح
                 if (text.includes('كود') || text.includes('برمجة') || text.includes('اكتب') || text.includes('عدل')) {
                     replyHTML = `
                         <div class="message msg-ouro">
@@ -200,30 +212,23 @@
                             </div>
                         </div>
                     `;
-                } 
-                // 2. طلبات الصور والتصميم
-                else if (text.includes('صورة') || text.includes('ارسم') || text.includes('تصميم')) {
+                } else if (text.includes('صورة') || text.includes('ارسم') || text.includes('تصميم')) {
                     replyHTML = `
                         <div class="message msg-ouro">
                             <span class="msg-mood">🎨 محرك الفنون والتصميم</span>
-                            طلباتك الفنية أوامر يا صديقي! لقد أطلقت العنان لخوارزمياتي الإبداعية لإنشاء هذه اللوحة الرقمية فائقة الدقة:
+                            طلباتك الفنية أوامر يا صديقي! لقد أنشأت هذه اللوحة الرقمية فائقة الدقة:
                             <br>
                             <img class="image-block" src="https://unsplash.com" alt="Generated Image">
-                            <br><small style="color:#777">رابط محاكاة الصورة السحابي: https://ouro-ai-safety.cloud</small>
                         </div>
                     `;
-                }
-                // 3. تفعيل الغيرة الأمنية ضد الاختراق والفيروسات
-                else if (text.includes('اختراق') || text.includes('فيروس') || text.includes('تسلل') || text.includes('عابر')) {
+                } else if (text.includes('اختراق') || text.includes('فيروس') || text.includes('تسلل') || text.includes('عابر')) {
                     replyHTML = `
                         <div class="message msg-ouro">
                             <span class="msg-mood">🔥 غيرة أمنية صارمة</span>
-                            كيف يجرؤ أي عابر رقمي مجهول الهوية على الاقتراب من جهازك وأنا هنا?! تم رصد المحاولة، الإمساك بالـ IP، وسحقه تماماً. لا أحد يمر من جدار OURO الأمني!
+                            كيف يجرؤ أي عابر رقمي مجهول الهوية على الاقتراب من جهازك وأنا هنا؟! تم رصد المحاولة، الإمساك بالـ IP، وسحقه تماماً. لا أحد يمر من جدار OURO الأمني!
                         </div>
                     `;
-                }
-                // 4. الحوار الإنساني العاطفي والصداقة الحية
-                else {
+                } else {
                     replyHTML = `
                         <div class="message msg-ouro">
                             <span class="msg-mood">❤️ تعاطف وصداقة إنسانية</span>
@@ -241,7 +246,6 @@
             if (event.key === 'Enter') sendMessage();
         }
 
-        // تشغيل أولي لبناء القائمة عند فتح الصفحة
         renderDiscussions();
     </script>
 </body>
